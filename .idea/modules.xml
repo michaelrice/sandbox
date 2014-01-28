@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/sandbox.iml" filepath="$PROJECT_DIR$/sandbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sandbox-grailsPlugins.iml" filepath="$PROJECT_DIR$/sandbox-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
