@@ -88,10 +88,13 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    all 'com.test'
 }
 
 
 // Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.providerNames = ['intensiveAuthenticationProvider', 'anonymousAuthenticationProvider']
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.test.sandbox.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.test.sandbox.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.test.sandbox.Role'
@@ -104,4 +107,3 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	'/**/favicon.ico':                ['permitAll']
 ]
-
