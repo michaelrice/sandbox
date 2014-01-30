@@ -27,7 +27,11 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
             //
             UserAuth userAuth = new UserAuth()
             String intensiveToken = userAuth.login(untrusted.principal, untrusted.credentials)
-
+            // Check for this to be null. If its null the intensive login failed
+            if(!intensiveToken) {
+                log.debug("Login for user ${untrusted.principal} failed.")
+                throw new BadCredentialsException('Log in failed. It should fail')
+            }
             List authorities = [new SimpleGrantedAuthority('ROLE_USER')]
 
             // Conditionally add the admin authority
@@ -39,11 +43,11 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
             if(!this.isEngineer(untrusted.principal, userAuth)) {
                 authorities.remove(0)
                 log.debug("${untrusted.principal} was not found in the Engineer group and was removed from ROLE_USER and added to ROLE_READONLY")
-                authorities.add(new SimpleGrantedAuthority('ROLE_READONLY'))
+                //authorities.add(new SimpleGrantedAuthority('ROLE_READONLY'))
             }
 
             // Create a new trusted authentication with the user role
-            IntensiveToken trusted = new IntensiveToken(untrusted.principal, untrusted.credentials, /*[new GrantedAuthorityImpl('ROLE_USER'), new GrantedAuthorityImpl('ROLE_ADMIN')]*/ authorities)
+            IntensiveToken trusted = new IntensiveToken(untrusted.principal, untrusted.credentials, authorities)
             trusted.intensiveAuthToken =  intensiveToken
 
             // Log the success
