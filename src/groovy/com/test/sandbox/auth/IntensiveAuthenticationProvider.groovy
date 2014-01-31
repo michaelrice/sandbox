@@ -25,7 +25,7 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
         try {
 
             //
-            UserAuth userAuth = new UserAuth()
+            IntensiveUserAuth userAuth = new IntensiveUserAuth()
             userAuth.login(untrusted.principal, untrusted.credentials)
             List authorities = []
 
@@ -86,7 +86,7 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
      * @param name
      * @return
      */
-    protected boolean isAdmin(String name, UserAuth userAuth) {
+    protected boolean isAdmin(String name, IntensiveUserAuth userAuth) {
         if(userAuth.isMemberOf(userAuth.DEVOPS) || userAuth.isMemberOf(userAuth.ARCHITECT) ||
             userAuth.isMemberOf(userAuth.VQCADMIN)) {
             return true
@@ -94,7 +94,7 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
         return false
     }
 
-    protected boolean isEngineer(String name, UserAuth userAuth) {
+    protected boolean isEngineer(String name, IntensiveUserAuth userAuth) {
         if(userAuth.isMemberOf(userAuth.ENGINEER)) {
             return true
         }

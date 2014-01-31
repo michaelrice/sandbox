@@ -1,6 +1,5 @@
 package com.test.sandbox.auth
 
-import grails.util.Environment
 import grails.util.Holders
 
 import javax.naming.Context
@@ -22,8 +21,8 @@ import org.apache.log4j.Logger
  * Time: 5:11 PM
  * Licenses: MIT http://opensource.org/licenses/MIT
  */
-class UserAuth {
-    private final Logger log = Logger.getLogger(UserAuth.class)
+class IntensiveUserAuth {
+    private final Logger log = Logger.getLogger(IntensiveUserAuth.class)
     /**
      * Group constants.
      */
