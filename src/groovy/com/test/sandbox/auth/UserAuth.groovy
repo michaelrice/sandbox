@@ -31,6 +31,7 @@ class UserAuth {
     public final static ARCHITECT = "ROLE_ADMIN"
     public final static DEVOPS = "ROLE_ADMIN"
     public final static VQCADMIN = "ROLE_ADMIN"
+    public final static READONLY = "ROLE_READONLY"
     def activeDirectoryURL = Holders.applicationContext.activeDirectoryURL
 
     /**
@@ -140,10 +141,12 @@ class UserAuth {
             // Search strings
             NamingEnumeration answer = ctx.search("ou=Accounts,ou=Virtualization,ou=Rackspace-Infrastructure,dc=intensive,dc=int", filter, ctls)
 
-            // If no answers are given, the login was invalid
+            // If no answers are given, the user was not in the virt ou but they are at least
+            // able to log into intensive
             if (!answer.hasMore()) {
                 ctx.close()
-                return
+                groups.add(READONLY)
+                return true
             }
 
             // Check all results
