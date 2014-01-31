@@ -27,13 +27,13 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
             //
             UserAuth userAuth = new UserAuth()
             userAuth.login(untrusted.principal, untrusted.credentials)
+            List authorities = []
 
             // Check for this to be null. If its null the intensive login failed
             if(!userAuth.isValid()) {
                 log.debug("Login for user ${untrusted.principal} failed.")
                 throw new BadCredentialsException('Log in failed. It should fail')
             }
-            //List authorities = [new SimpleGrantedAuthority('ROLE_USER')]
 
             // Conditionally add the admin authority
             if (this.isAdmin(untrusted.principal,userAuth)) {
