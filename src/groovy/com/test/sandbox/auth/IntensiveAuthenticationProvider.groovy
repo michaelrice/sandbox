@@ -1,10 +1,10 @@
 package com.test.sandbox.auth
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.BadCredentialsException
-import org.apache.log4j.Logger
 import org.apache.commons.logging.LogFactory
 
 class IntensiveAuthenticationProvider implements AuthenticationProvider {
@@ -26,13 +26,14 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
 
             //
             UserAuth userAuth = new UserAuth()
-            String intensiveToken = userAuth.login(untrusted.principal, untrusted.credentials)
+            userAuth.login(untrusted.principal, untrusted.credentials)
+
             // Check for this to be null. If its null the intensive login failed
-            if(!intensiveToken) {
+            if(!userAuth.isValid()) {
                 log.debug("Login for user ${untrusted.principal} failed.")
                 throw new BadCredentialsException('Log in failed. It should fail')
             }
-            List authorities = [new SimpleGrantedAuthority('ROLE_USER')]
+            //List authorities = [new SimpleGrantedAuthority('ROLE_USER')]
 
             // Conditionally add the admin authority
             if (this.isAdmin(untrusted.principal,userAuth)) {
@@ -47,8 +48,8 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
             }
 
             // Create a new trusted authentication with the user role
-            IntensiveToken trusted = new IntensiveToken(untrusted.principal, untrusted.credentials, authorities)
-            trusted.intensiveAuthToken =  intensiveToken
+            UsernamePasswordAuthenticationToken trusted = new UsernamePasswordAuthenticationToken(untrusted.principal, untrusted.credentials, authorities)
+
 
             // Log the success
             log.info("Login successful --- " + trusted.principal)
@@ -76,7 +77,7 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
      */
     boolean supports(Class authentication) {
 
-        return authentication.equals(IntensiveToken.class)
+        return authentication.equals(UsernamePasswordAuthenticationToken.class)
     }
 
     /**

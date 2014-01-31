@@ -4,23 +4,6 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 beans = {
 
     intensiveAuthenticationProvider(com.test.sandbox.auth.IntensiveAuthenticationProvider) { }
-    authenticationProcessingFilter(IntensiveLoginFilter) {
-        def conf = SpringSecurityUtils.securityConfig
-
-        authenticationManager = ref('authenticationManager')
-        sessionAuthenticationStrategy = ref('sessionAuthenticationStrategy')
-        authenticationSuccessHandler = ref('authenticationSuccessHandler')
-        authenticationFailureHandler = ref('authenticationFailureHandler')
-        rememberMeServices = ref('rememberMeServices')
-        authenticationDetailsSource = ref('authenticationDetailsSource')
-
-        filterProcessesUrl = conf.apf.filterProcessesUrl
-        usernameParameter = conf.apf.usernameParameter
-        passwordParameter = conf.apf.passwordParameter
-        continueChainBeforeSuccessfulAuthentication = conf.apf.continueChainBeforeSuccessfulAuthentication
-        allowSessionCreation = conf.apf.allowSessionCreation
-        postOnly = conf.apf.postOnly
-    }
 
     activeDirectoryURL(org.springframework.jndi.JndiObjectFactoryBean) {
         jndiName = 'java:comp/env/activeDirectoryURL'
