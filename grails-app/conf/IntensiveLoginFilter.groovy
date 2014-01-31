@@ -11,7 +11,6 @@ class IntensiveLoginFilter extends RequestHolderAuthenticationFilter {
 
     @Override
     public void afterPropertiesSet() {
-
         super.setFilterProcessesUrl('/j_spring_security_check')
     }
 

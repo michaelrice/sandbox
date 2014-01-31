@@ -95,9 +95,6 @@ log4j = {
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.providerNames = ['intensiveAuthenticationProvider', 'anonymousAuthenticationProvider']
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.test.sandbox.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.test.sandbox.UserRole'
-grails.plugin.springsecurity.authority.className = 'com.test.sandbox.Role'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['permitAll'],
