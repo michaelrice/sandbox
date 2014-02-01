@@ -4,6 +4,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 beans = {
 
     intensiveAuthenticationProvider(com.test.sandbox.auth.IntensiveAuthenticationProvider) { }
+    coreAuthenticationProvider(com.test.sandbox.auth.CoreAuthenticationProvider) { }
 
     activeDirectoryURL(org.springframework.jndi.JndiObjectFactoryBean) {
         jndiName = 'java:comp/env/activeDirectoryURL'

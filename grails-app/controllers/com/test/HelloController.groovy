@@ -6,9 +6,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class HelloController {
 
     @Secured(["ROLE_USER","ROLE_ADMIN","ROLE_READONLY"])
-    def index() {
-        render "hello world"
-    }
+    def index() {}
 
     @Secured("ROLE_ADMIN")
     def admin() {

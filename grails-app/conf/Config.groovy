@@ -94,7 +94,7 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.providerNames = ['intensiveAuthenticationProvider', 'anonymousAuthenticationProvider']
+grails.plugin.springsecurity.providerNames = ['intensiveAuthenticationProvider', 'coreAuthenticationProvider','anonymousAuthenticationProvider']
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['permitAll'],
@@ -105,3 +105,5 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	'/**/favicon.ico':                ['permitAll']
 ]
+
+core.location = "https://ws.core.rackspace.com/"

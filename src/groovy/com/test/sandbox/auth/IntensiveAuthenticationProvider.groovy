@@ -35,18 +35,21 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
                 throw new BadCredentialsException('Log in failed. It should fail')
             }
 
-            // Conditionally add the admin authority
-            if (this.isAdmin(untrusted.principal,userAuth)) {
+            // Conditionally add the admin authority                                0
+            if (isAdmin(userAuth)) {
                 authorities.add(new SimpleGrantedAuthority('ROLE_ADMIN'))
                 log.debug("Found ${untrusted.principal} in the Admin group")
             }
 
-            if(!this.isEngineer(untrusted.principal, userAuth)) {
-                authorities.remove(0)
-                log.debug("${untrusted.principal} was not found in the Engineer group and was removed from ROLE_USER and added to ROLE_READONLY")
-                //authorities.add(new SimpleGrantedAuthority('ROLE_READONLY'))
+            if(isEngineer(userAuth)) {
+                authorities.add(new SimpleGrantedAuthority('ROLE_USER'))
+                log.debug("${untrusted.principal} was found in the Engineer group and was added to ROLE_USER group")
             }
 
+            if(isReadOnly(userAuth)) {
+                authorities.add(new SimpleGrantedAuthority('ROLE_READONLY'))
+                log.debug("${untrusted.principal} has a valid Intensive account but is not on the virt team. User being placed into READONLY group")
+            }
             // Create a new trusted authentication with the user role
             UsernamePasswordAuthenticationToken trusted = new UsernamePasswordAuthenticationToken(untrusted.principal, untrusted.credentials, authorities)
 
@@ -60,10 +63,10 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
         catch (Exception e) {
 
             // Log the exception
-            log.info("Login failed --- " + untrusted.principal + ": " + e.getMessage())
+            log.info("Login failed --- " + untrusted.principal,e)
 
             // Get user details
-            throw new BadCredentialsException('Log in failed. It should fail')
+            throw new BadCredentialsException('Intensive Log in failed. It should fail')
         }
 
         return untrusted
@@ -86,7 +89,7 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
      * @param name
      * @return
      */
-    protected boolean isAdmin(String name, IntensiveUserAuth userAuth) {
+    protected boolean isAdmin(IntensiveUserAuth userAuth) {
         if(userAuth.isMemberOf(userAuth.DEVOPS) || userAuth.isMemberOf(userAuth.ARCHITECT) ||
             userAuth.isMemberOf(userAuth.VQCADMIN)) {
             return true
@@ -94,8 +97,15 @@ class IntensiveAuthenticationProvider implements AuthenticationProvider {
         return false
     }
 
-    protected boolean isEngineer(String name, IntensiveUserAuth userAuth) {
+    protected boolean isEngineer(IntensiveUserAuth userAuth) {
         if(userAuth.isMemberOf(userAuth.ENGINEER)) {
+            return true
+        }
+        return false
+    }
+
+    protected boolean isReadOnly(IntensiveUserAuth userAuth) {
+        if(userAuth.isMemberOf(userAuth.READONLY)) {
             return true
         }
         return false

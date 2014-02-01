@@ -54,5 +54,6 @@ grails.project.dependency.resolution = {
 
         compile ':cache:1.0.0'
         compile ":spring-security-core:2.0-RC2"
+        compile ":jersey-request-builder:1.2.0"
     }
 }

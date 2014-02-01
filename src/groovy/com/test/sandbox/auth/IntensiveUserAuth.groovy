@@ -117,9 +117,6 @@ class IntensiveUserAuth {
         env.put(Context.SECURITY_PRINCIPAL, username)
         env.put(Context.SECURITY_CREDENTIALS, password)
 
-        // Mark the instance as queried.
-        queried = true
-
         // Catch-all
         try {
             // Create the LDAP connection
@@ -127,6 +124,9 @@ class IntensiveUserAuth {
             log.debug("Intensive login ctx created")
             // Create the searcher
             SearchControls ctls = new SearchControls()
+            // login was valid if we make it past here.
+            // Mark the instance as queried.
+            queried = true
             log.debug("Intensive login ctls created")
 
             // This is the second phase in the login process where we assign AD permissions.
@@ -139,12 +139,14 @@ class IntensiveUserAuth {
 
             // Search strings
             NamingEnumeration answer = ctx.search("ou=Accounts,ou=Virtualization,ou=Rackspace-Infrastructure,dc=intensive,dc=int", filter, ctls)
-
+            log.debug("Answer hasmore? ${answer.hasMore()}")
             // If no answers are given, the user was not in the virt ou but they are at least
             // able to log into intensive
             if (!answer.hasMore()) {
+                log.debug("Adding ${username} to READONLY group.")
                 ctx.close()
                 groups.add(READONLY)
+                valid = true
                 return true
             }
 
@@ -197,7 +199,7 @@ class IntensiveUserAuth {
             valid = true
         } catch (Exception e) {
             // Do nothing. It failed and the login is invalid
-            log.debug("Failed intensive login.", e)
+            log.debug("Failed intensive login. Stacktrace will follow: ", e)
         }
     }
 
