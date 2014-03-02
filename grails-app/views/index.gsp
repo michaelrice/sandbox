@@ -6,7 +6,7 @@
 		<title>Welcome to Grails</title>
 	</head>
 	<body role="document">
-    <!-- Fixed navbar -->
-
+        <p>This is some info</p>
+        <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
  	</body>
 </html>

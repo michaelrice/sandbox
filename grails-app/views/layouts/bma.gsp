@@ -12,14 +12,13 @@
 </head>
     <body>
         <g:render template="/layouts/navbar" />
+        <div class="page-header">&nbsp;</div>
         <div class="container theme-showcase" role="main">
-        <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+            <div class="jumbotron">
+                <g:layoutBody/>
+                <r:layoutResources/>
+            </div>
         </div>
-            <g:layoutBody/>
-        </div>
-        <r:layoutResources/>
+        <g:render template="/layouts/footer" />
     </body>
 </html>
