@@ -88,4 +88,7 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    all 'grails.app.controllers.*'
+    all 'com.rackspace'
 }

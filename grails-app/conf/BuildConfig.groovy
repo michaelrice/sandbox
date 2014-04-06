@@ -30,11 +30,15 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo "http://maven.pc.rackspace.com/artifactory/simple/plugins-release-local"
+        mavenRepo "http://maven.pc.rackspace.com/artifactory/simple/ext-release-local"
+        mavenRepo "http://maven.pc.rackspace.com/artifactory/simple/libs-release-local"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+        compile 'com.vmware:vijava:5120121125'
     }
 
     plugins {
