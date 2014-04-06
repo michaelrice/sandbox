@@ -6,97 +6,117 @@ import com.github.fge.jackson.JsonLoader
 import com.github.fge.jsonschema.main.JsonSchema
 import com.github.fge.jsonschema.main.JsonSchemaFactory
 import com.github.fge.jsonschema.report.ProcessingReport
+import com.rackspace.rvi.vcd.Maker
+import com.rackspace.rvi.vcd.VirtualMachine
+import groovy.json.JsonSlurper
+
 
 class HelloController {
 
     def index() {
+        Maker maker = new Maker()
+        def vms = VirtualMachine.findAll()
+        render "${vms}"
+        return
+        /*
         JsonLoader jsonLoader = new JsonLoader()
-        JsonNode prodSchema = JsonLoader.fromString("""
+        JsonNode prodSchema = JsonLoader.fromString('''
 {
-    "\$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Product set",
-    "type": "array",
-    "items": {
-        "title": "Product",
-        "type": "object",
-        "properties": {
-            "id": {
-                "description": "The unique identifier for a product",
-                "type": "number"
-            },
-            "name": {
-                "type": "string"
-            },
-            "price": {
-                "type": "number",
-                "minimum": 0,
-                "exclusiveMinimum": true
-            },
-            "tags": {
-                "type": "array",
-                "items": {
-                    "type": "string"
-                },
-                "minItems": 1,
-                "uniqueItems": true
-            },
-            "dimensions": {
-                "type": "object",
-                "properties": {
-                    "length": {"type": "number"},
-                    "width": {"type": "number"},
-                    "height": {"type": "number"}
-                },
-                "required": ["length", "width", "height"]
-            },
-            "warehouseLocation": {
-                "description": "Coordinates of the warehouse with the product",
-                "\$ref": "http://json-schema.org/geo"
-            }
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "coreStatus": {
+            "type": "string"
         },
-        "required": ["id", "name", "price"]
-    }
-}
-""")
-        JsonNode data = JsonLoader.fromString("""
-[
-    {
-        "id": 3,
-        "name": "An ice sculpture",
-        "price": 12.50,
-        "tags": ["cold", "ice"],
-        "dimensions": {
-            "length": 7.0,
-            "width": 12.0,
-            "height": 9.5
-        },
-        "warehouseLocation": {
-            "latitude": -78.75,
-            "longitude": 20.4
+        "hostOSLicenseTypes": {
+            "type": "array"
         }
     },
-    {
-        "id": 3,
-        "name": "A blue mouse",
-        "price": 25.50,
-            "dimensions": {
-            "length": 3.1,
-            "width": 1.0,
-            "height": 1.0
+    "patternProperties" : {
+        "^platform:[A-Z0-9_]+$" : {
+            "$ref" : "#/definitions/deviceConfig"
         },
-        "warehouseLocation": {
-            "latitude": 54.4,
-            "longitude": -32.7
+        "^osName:[A-Z0-9_]+$" : {
+            "$ref" : "#/definitions/deviceConfig"
+        },
+        "^appLicenses:[A-Z0-9_]+$" : {
+            "$ref" : "#/definitions/deviceConfig"
+        },
+        "^osSupport:[A-Z0-9_]+$" : {
+            "$ref" : "#/definitions/deviceConfig"
+        }
+    },
+    "additionalProperties": false,
+    "definitions" : {
+        "deviceConfig": {
+            "type" : "object",
+            "properties" : {
+                "type": { "enum" : [ "DeviceConfig"]},
+                "category" : {"enum" : [ "platform", "appLicenses", "osSupport", "osName"]},
+                "name" : { "type" : "string"},
+                "attributes" : { "type" : "object" }
+            },
+            "additionalProperties": false
         }
     }
-]
+}
+''')
+        JsonNode data = JsonLoader.fromString("""
+{
+    "coreStatus": "ONLINE_COMPLETE",
+    "hostOSLicenseTypes": ["WINDOWS"],
+    "platform:WIN_2008_STD_X64": {
+      "type": "DeviceConfig",
+      "category": "platform",
+      "name": "WIN_2008_STD_X64",
+      "attributes": {}
+    },
+    "osName:WINDOWS_2008_STD_X64": {
+      "type": "DeviceConfig",
+      "category": "osName",
+      "name": "WINDOWS_2008_STD_X64",
+      "attributes": {
+        "type": "WINDOWS"
+      }
+    },
+    "appLicenses:MSSQL_WEB": {
+      "type": "DeviceConfig",
+      "category": "appLicenses",
+      "name": "MSSQL_WEB",
+      "attributes": {
+        "provider": "RACKSPACE",
+        "supported": "Rackspace Managed"
+      }
+    },
+    "appLicenses:MBU_MSSQL_AGENT": {
+      "type": "DeviceConfig",
+      "category": "appLicenses",
+      "name": "MBU_MSSQL_AGENT",
+      "attributes": {
+        "provider": "RACKSPACE",
+        "supported": "Rackspace Managed"
+      }
+    },
+    "osSupport:RACKSPACE_MANAGED": {
+      "type": "DeviceConfig",
+      "category": "appLicenses",
+      "name": "RACKSPACE_MANAGED",
+      "attributes": {}
+    }
+}
 """)
         ProcessingReport report
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault()
         JsonSchema schema = factory.getJsonSchema(prodSchema)
         report = schema.validate(data)
-        render report.success
+        if(report.success) {
+            def payload = new JsonSlurper().parseText(data.toString())
+            payload.each {key, value ->
+                render "raxdata_${key}  ->  ${value} <br />"
+            }
+        }
         return
         render "hello world"
+        */
     }
 }

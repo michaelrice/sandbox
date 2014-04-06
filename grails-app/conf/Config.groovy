@@ -92,3 +92,16 @@ log4j = {
 
     all 'com.budjb'
 }
+
+rabbitmq {
+    connection {
+        host = "localhost"
+        username = "guest"
+        password = "guest"
+        virtualHost = "v1.api.rvi.rackspace.com"
+    }
+
+    queues = {
+        queue(name: "helloWorld", durable: true)
+    }
+}
