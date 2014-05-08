@@ -88,4 +88,33 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+    appenders {
+        'null' name:'stacktrace'
+    }
+    all 'com.budjb.rabbitmq'
+    all 'netapp.manage'
+    all 'com.rackspace'
+    all 'grails.app.controllers.*'
+    all 'grails.app.services.*'
+}
+
+rabbitmq {
+    connection {
+        host = 'localhost'
+        username = 'guest'
+        password = 'guest'
+        virtualHost = 'v1.api.rvi.rackspace.com'
+    }
+}
+
+rabbitmq {
+    queues = {
+        exchange name: 'sandbox', type: direct, durable: true, {
+            queue (
+                    name: 'sandbox.createVirtualMachine',
+                    durable: true,
+                    binding: 'createVirtualMachine'
+            )
+        }
+    }
 }
