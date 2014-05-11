@@ -88,4 +88,10 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    appenders {
+        'null' name:'stacktrace'
+    }
+    all 'grails.app.controllers.*'
+    all 'grails.app.services.*'
 }
