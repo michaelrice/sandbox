@@ -71,21 +71,38 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
-
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+            'org.codehaus.groovy.grails.web.pages',          // GSP
+            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+            'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+            'org.codehaus.groovy.grails.commons',            // core / classloading
+            'org.codehaus.groovy.grails.plugins',            // plugins
+            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+            'org.springframework',
+            'org.hibernate',
+            'net.sf.ehcache.hibernate'
+    appenders {
+        'null' name:'stacktrace'
+    }
+    all 'com.budjb.rabbitmq'
+    all 'netapp.manage'
+    all 'com.rackspace'
+    all 'grails.app.controllers.*'
+    all 'grails.app.services.*'
+    all 'ch.ethzx'
+    all 'grails.plugin.remotessh'
 }
+
+remotessh.USER = ""
+// The password leave blank if you are about to use SSH Keys, otherwise provide password to ssh auth
+remotessh.PASS=""
+
+// # The ssh key is your id_rsa or id_dsa - please note your tomcat will need access/permissions to file/location
+remotessh.KEY=""
+
+// # If you use a key pass for your key connections then provide it below
+remotessh.KEYPASS=""
+
+// # The ssh port to connect through if not given will default to 22
+remotessh.PORT="22"
