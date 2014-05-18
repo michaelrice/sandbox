@@ -94,4 +94,7 @@ log4j = {
     }
     all 'grails.app.controllers.*'
     all 'grails.app.services.*'
+    all 'com.toastcoders'
+    all 'com.jcraft.*'
+    all 'grails.app.controllers'
 }

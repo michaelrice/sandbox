@@ -5,6 +5,7 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.plugin.location."jsch-ssh2" = "C:\\users\\errr\\documents\\github\\jsch-ssh2"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -35,6 +36,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+        compile 'com.jcraft:jsch:0.1.51'
     }
 
     plugins {
