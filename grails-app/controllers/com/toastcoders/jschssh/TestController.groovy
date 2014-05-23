@@ -14,10 +14,10 @@ class TestController {
                 host = "10.12.254.10"
                 username = "root"
                 password = "password"
-                localFile = "C:/users/errr/desktop/hello_world.txt"
+                localFile = "/home/errr/bashrc"
                 remoteFile = "/tmp/hello_world.txt"
                 strictHostKeyChecking = "yes"
-                ptimestamp = false
+                preserveTimeStamps = false
             }
         }
         catch (JSchException e) {
@@ -30,6 +30,19 @@ class TestController {
             password = "password"
             command = "esxcli --formatter=xml hardware pci list"
             strictHostKeyChecking = "yes"
+        }
+
+        try {
+            new ScpFileFrom().execute() {
+                host = "10.12.254.10"
+                username = "root"
+                password = "password"
+                localFile = "/home/errr/my_cool_new_file.txt"
+                remoteFile = "/tmp/hello_world.txt"
+            }
+        }
+        catch (JSchException je) {
+            log.trace("Failed to copy file from remote host to local host.")
         }
     }
 }
