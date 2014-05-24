@@ -8,12 +8,15 @@ import com.toastcoders.jschssh.ScpFileTo
 class TestController {
 
     def index() {
-
+        String myhost = "10.12.254.10"
+        String myuser = "root"
         try {
             new ScpFileTo().execute() {
-                host = "10.12.254.10"
-                username = "root"
+                host = myhost
+                username = myuser
                 password = "password"
+                //keyFile = "~/.ssh/id_rsa"
+                //keyFilePassword = "\n"
                 localFile = "/home/errr/bashrc"
                 remoteFile = "/tmp/hello_world.txt"
                 strictHostKeyChecking = "yes"
@@ -25,18 +28,20 @@ class TestController {
         }
 
         render new RunSshCommand().execute() {
-            host = "10.12.254.10"
-            username = "root"
+            host = myhost
+            username = myuser
             password = "password"
+            //keyFile = "~/.ssh/id_rsa"
             command = "esxcli --formatter=xml hardware pci list"
             strictHostKeyChecking = "yes"
         }
 
         try {
             new ScpFileFrom().execute() {
-                host = "10.12.254.10"
-                username = "root"
+                host = myhost
+                username = myuser
                 password = "password"
+                //keyFile = "~/.ssh/id_rsa"
                 localFile = "/home/errr/my_cool_new_file.txt"
                 remoteFile = "/tmp/hello_world.txt"
             }
